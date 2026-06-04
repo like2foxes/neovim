@@ -1,30 +1,37 @@
 local opt = vim.opt
-_G.fd_findfunc = function (pat, cmdtype)
-     -- ignore non-file search contexts if you want
-  pat = pat or ""
+local fd = function(pat)
+    local fdout = vim.system({
+        "fd",
+        "--type", "f",
+        "--hidden",
+        "--follow",
+        "--full-path",
+        "--exclude", ".git",
+        pat,
+    }):wait()
 
-  if pat == "" then
-    return {}
-  end
+    if fdout.code ~= 0 then
+        return {}
+    end
 
-  local results = vim.fn.systemlist({
-    "fd",
-    "--type", "f",
-    "--hidden",
-    "--follow",
-    "--exclude", ".git",
-    pat,
-    ".",
-  })
+    local matches = vim.split(fdout.stdout, "\n", { trimempty = true })
+    return matches
+end
 
-  if vim.v.shell_error ~= 0 then
-    return {}
-  end
+_G.fd_findfunc = function(cmdarg, cmdcomplete)
+    if not cmdcomplete then
+        local stat = vim.uv.fs_stat(cmdarg)
+        if stat and stat.type == 'file' then
+            return { cmdarg }
+        end
+        local matches = fd(cmdarg)
+        if #matches == 0 then
+            return {}
+        end
+        return { matches[1] }
+    end
 
-  -- for i, v in ipairs(results) do
-  --     results[i] = vim.fs.normalize(v)
-  -- end
-  return results
+    return fd(cmdarg)
 end
 vim.opt.path:append('**')
 
