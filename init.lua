@@ -72,7 +72,7 @@ vim.keymap.set("n", "<leader>rl", function()
     vim.wo.rightleft = not vim.wo.rightleft
 end, { desc = "Toggle RTL" })
 vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, { desc = "Format" })
-
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Escape Terminal" })
 vim.cmd.packadd('nvim.difftool')
 vim.cmd.packadd('nvim.undotree')
 
