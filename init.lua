@@ -57,7 +57,7 @@ opt.undofile = true
 opt.swapfile = false
 opt.backup = false
 opt.foldmethod = "expr"
-opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
 opt.foldlevelstart = 99
 opt.clipboard = "unnamedplus"
 opt.mouse = "a"
@@ -84,7 +84,6 @@ vim.pack.add({
     gh("neovim/nvim-lspconfig"),
     gh("lewis6991/gitsigns.nvim"),
     gh('seblj/roslyn.nvim'),
-    gh('nvim-treesitter/nvim-treesitter'),
 })
 
 vim.lsp.enable("lua_ls")
