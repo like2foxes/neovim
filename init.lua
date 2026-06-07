@@ -1,7 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-local opt = vim.opt
 local fd = function(pat)
     local fdout = vim.system({
         "fd",
@@ -37,63 +36,49 @@ _G.fd_findfunc = function(cmdarg, cmdcomplete)
     return fd(cmdarg)
 end
 
-opt.number = true
-opt.relativenumber = true
-opt.tabstop = 4
-opt.shiftwidth = 4
-opt.expandtab = true
-opt.smartindent = true
-opt.ignorecase = true
-opt.smartcase = true
-opt.hlsearch = true
-opt.incsearch = true
-opt.signcolumn = "yes"
-opt.cursorline = true
-opt.wrap = false
-opt.splitbelow = true
-opt.splitright = true
-opt.autoread = true
-opt.undofile = true
-opt.swapfile = false
-opt.backup = false
-opt.foldmethod = "expr"
-opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
-opt.foldlevelstart = 99
-opt.clipboard = "unnamedplus"
-opt.mouse = "a"
-opt.findfunc = "v:lua.fd_findfunc"
-opt.grepprg = "rg --vimgrep --smart-case --hidden --no-heading"
-opt.wildmode = "noselect:lastused,full"
-opt.wildoptions = "pum,tagfile,fuzzy"
-opt.completeopt = "fuzzy,menuone,noselect,popup,preview"
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.cursorline = true
+vim.opt.wrap = false
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.autoread = true
+vim.opt.undofile = true
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
+vim.opt.foldlevelstart = 99
+vim.opt.clipboard = "unnamedplus"
+vim.opt.findfunc = "v:lua.fd_findfunc"
+vim.opt.grepprg = "rg --vimgrep --smart-case --hidden --no-heading"
+vim.opt.wildmode = "noselect:lastused,full"
+vim.opt.wildoptions = "pum,tagfile,fuzzy"
+vim.opt.completeopt = "fuzzy,menuone,noselect,popup,preview"
 
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set("n", "<leader>rl", function()
-    vim.wo.rightleft = not vim.wo.rightleft
-end, { desc = "Toggle RTL" })
 vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, { desc = "Format" })
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Escape Terminal" })
 vim.cmd.packadd('nvim.difftool')
 vim.cmd.packadd('nvim.undotree')
 
-local function gh(name)
-    return "https://github.com/" .. name
-end
-
 vim.pack.add({
-    gh("neovim/nvim-lspconfig"),
-    gh("lewis6991/gitsigns.nvim"),
-    gh('seblj/roslyn.nvim'),
+    "https://github.com/neovim/nvim-lspconfig",
+    "https://github.com/lewis6991/gitsigns.nvim",
+    "https://github.com/seblj/roslyn.nvim",
 })
 
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("ts_ls")
-vim.lsp.enable("angularls")
-vim.lsp.enable("html")
-vim.lsp.enable("cssls")
-vim.lsp.enable("fsautocomplete")
-vim.lsp.enable("marksman")
-vim.lsp.enable("clangd")
+local lsps = { "lua_ls", "ts_ls", "angularls", "html", "cssls", "fsautocomplete", "marksman", "clangd", }
+for _, v in pairs(lsps) do
+    vim.lsp.enable(v)
+end
 vim.cmd.colorscheme('habamax')
 
 vim.g.netrw_preview = 1
