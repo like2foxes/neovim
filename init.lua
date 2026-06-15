@@ -73,7 +73,6 @@ vim.cmd.packadd('nvim.undotree')
 
 vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/seblj/roslyn.nvim",
 })
 
@@ -82,15 +81,22 @@ for _, v in pairs(lsps) do
     vim.lsp.enable(v)
 end
 
-require('roslyn').setup({
-    choose_target = function(target)
-        return vim.iter(target):find(function(item)
-            if string.match(item, "Silverbyte.Optima.Cloud.sln") then
-                return item
-            end
-        end)
-    end,
-    lock_target = true
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "cs", "csproj", "sln", "razor" },
+    once = true,
+    callback =
+        function()
+            require('roslyn').setup({
+                choose_target = function(target)
+                    return vim.iter(target):find(function(item)
+                        if string.match(item, "Silverbyte.Optima.Cloud.sln") then
+                            return item
+                        end
+                    end)
+                end,
+                lock_target = true
+            })
+        end
 })
 vim.cmd.colorscheme('habamax')
 
