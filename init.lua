@@ -1,6 +1,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+vim.schedule(function()
+    vim.opt.clipboard = "unnamedplus"
+end)
 local fd = function(pat)
     local fdout = vim.system({
         "fd",
@@ -57,7 +60,6 @@ vim.opt.backup = false
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
 vim.opt.foldlevelstart = 99
-vim.opt.clipboard = "unnamedplus"
 vim.opt.findfunc = "v:lua.fd_findfunc"
 vim.opt.grepprg = "rg --vimgrep --smart-case --hidden --no-heading"
 vim.opt.wildmode = "noselect:lastused,full"
@@ -65,7 +67,7 @@ vim.opt.wildoptions = "pum,tagfile,fuzzy"
 vim.opt.completeopt = "fuzzy,menuone,noselect,popup,preview"
 
 vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, { desc = "Format" })
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Escape Terminal" })
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Escape Terminal" })
 vim.cmd.packadd('nvim.difftool')
 vim.cmd.packadd('nvim.undotree')
 
