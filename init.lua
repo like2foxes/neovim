@@ -75,10 +75,21 @@ vim.pack.add({
     "https://github.com/seblj/roslyn.nvim",
 })
 
-local lsps = { "lua_ls", "ts_ls", "angularls", "html", "cssls", "fsautocomplete", "marksman", "clangd", }
+local lsps = { "lua_ls", "ts_ls", "angularls", "html", "cssls", "fsautocomplete", "marksman", "clangd", "gopls" }
 for _, v in pairs(lsps) do
     vim.lsp.enable(v)
 end
+
+require('roslyn').setup({
+    choose_target = function(target)
+        return vim.iter(target):find(function(item)
+            if string.match(item, "Silverbyte.Optima.Cloud.sln") then
+                return item
+            end
+        end)
+    end,
+    lock_target = true
+})
 vim.cmd.colorscheme('habamax')
 
 vim.g.netrw_preview = 1
@@ -87,5 +98,4 @@ vim.g.netrw_winsize = 25
 vim.g.netrw_altfile = 1
 vim.g.netrw_banner = 0
 vim.g.netrw_list_hide = "netrw_gitignore#Hide()"
-vim.g.netrw_keepdir = 0
 vim.g.netrw_localcopydircmd = 'cp -r'
