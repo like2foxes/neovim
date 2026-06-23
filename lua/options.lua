@@ -1,8 +1,14 @@
+require("vim._core.ui2").enable()
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.schedule(function()
-    vim.opt.clipboard = "unnamedplus"
+	vim.opt.clipboard = "unnamedplus"
 end)
+
+local osname = string.lower(vim.uv.os_uname().sysname)
+if string.find(osname, string.lower("windows")) then
+    vim.o.shell = "pwsh"
+end
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -23,5 +29,10 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
+vim.opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
 vim.opt.foldlevelstart = 99
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+vim.o.signcolumn = "yes"
+vim.opt.cmdheight = 0
+vim.opt.fillchars:append({ eob = "~" })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { ctermfg = 12 })
