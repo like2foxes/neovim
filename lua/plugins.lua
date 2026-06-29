@@ -4,7 +4,7 @@ vim.cmd.packadd("nvim.undotree")
 vim.pack.add({
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/seblj/roslyn.nvim",
-	"https://github.com/rebelot/kanagawa.nvim",
+	"https://github.com/folke/tokyonight.nvim",
 	"https://github.com/nvim-tree/nvim-web-devicons",
 	"https://github.com/ibhagwan/fzf-lua",
 	"https://github.com/stevearc/oil.nvim",
@@ -18,55 +18,10 @@ vim.pack.add({
 	"https://github.com/kristijanhusak/vim-dadbod-ui",
 	"https://github.com/kristijanhusak/vim-dadbod-completion",
 	"https://github.com/stevearc/conform.nvim",
-	"https://github.com/dlyongemallo/diffview-plus.nvim",
 	{ src = "https://github.com/saghen/blink.cmp", version = "v1.10.2" },
 }, { load = false })
 
 require("nvim-autopairs").setup()
-require("blink.cmp").setup({
-	fuzzy = { implementation = "lua" },
-	sources = {
-		per_filetype = {
-			sql = { "snippets", "dadbod", "buffer" },
-		},
-		providers = {
-			cmdline = { enabled = true },
-			snippets = { opts = { friendly_snippets = true } },
-			dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
-		},
-	},
-})
-require("conform").setup({
-	formatters_by_ft = {
-		lua = { "stylua" },
-		rust = { "rustfmt" },
-		javascript = { "prettierd" },
-		javascriptreact = { "prettierd" },
-		typescript = { "prettierd" },
-		typescriptreact = { "prettierd" },
-		cs = { "csharpier" },
-	},
-})
-
-require("lualine-theme")
-require("dbg")
-require("kanagawa").setup({
-	colors = {
-		theme = {
-			all = {
-				ui = {
-					bg_gutter = "none",
-				},
-			},
-		},
-	},
-	overrides = function(colors)
-		return {
-			-- Force the EndOfBuffer (tildes) to use a visible gray
-			EndOfBuffer = { fg = colors.palette.sumiInk4 },
-		}
-	end,
-})
 
 local lsps = { "lua_ls", "ts_ls", "angularls", "html", "cssls", "fsautocomplete", "marksman", "clangd", "gopls" }
 for _, v in pairs(lsps) do
@@ -85,4 +40,31 @@ require("roslyn").setup({
 })
 
 require("terminal")
-vim.cmd.colorscheme("kanagawa")
+vim.schedule(function()
+	require("lualine").setup({})
+	require("blink.cmp").setup({
+		fuzzy = { implementation = "lua" },
+		sources = {
+			per_filetype = {
+				sql = { "snippets", "dadbod", "buffer" },
+			},
+			providers = {
+				cmdline = { enabled = true },
+				snippets = { opts = { friendly_snippets = true } },
+				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+			},
+		},
+	})
+	require("conform").setup({
+		formatters_by_ft = {
+			lua = { "stylua" },
+			rust = { "rustfmt" },
+			javascript = { "prettierd" },
+			javascriptreact = { "prettierd" },
+			typescript = { "prettierd" },
+			typescriptreact = { "prettierd" },
+			cs = { "csharpier" },
+		},
+	})
+	require("dbg")
+end)

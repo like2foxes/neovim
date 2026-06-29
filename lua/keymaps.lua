@@ -29,6 +29,8 @@ nset("<F10>", ":DapStepOver<CR>", "Step Over")
 nset("<F11>", ":DapStepInto<CR>", "Step Into")
 nset("<F12>", ":DapStepOut<CR>", "Step Out")
 
+nset("<leader>gl", ":Gitsigns blame_line<CR>", "Show Git Blame")
+nset("<leader>gq", ":Gitsigns setqflist<CR>", "All changes")
 vim.keymap.set({ "v", "n" }, "<leader>f", function()
 	require("conform").format({ async = true })
 end, { desc = "Format", silent = true })

@@ -7,9 +7,10 @@ end)
 
 local osname = string.lower(vim.uv.os_uname().sysname)
 if string.find(osname, string.lower("windows")) then
-    vim.o.shell = "pwsh"
+	vim.o.shell = "pwsh"
 end
 
+vim.cmd.colorscheme("tokyonight")
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.tabstop = 4
@@ -34,5 +35,3 @@ vim.opt.foldlevelstart = 99
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 vim.o.signcolumn = "yes"
 vim.opt.cmdheight = 0
-vim.opt.fillchars:append({ eob = "~" })
-vim.api.nvim_set_hl(0, "EndOfBuffer", { ctermfg = 12 })
