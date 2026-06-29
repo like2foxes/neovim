@@ -23,7 +23,7 @@ vim.pack.add({
 
 require("nvim-autopairs").setup()
 
-local lsps = { "lua_ls", "ts_ls", "angularls", "html", "cssls", "fsautocomplete", "marksman", "clangd", "gopls" }
+local lsps = { "lua_ls", "ts_ls", "angularls", "html", "cssls", "fsautocomplete", "marksman", "clangd", "gopls", "ruby_lsp", "herb_ls"  }
 for _, v in pairs(lsps) do
 	vim.lsp.enable(v)
 end
