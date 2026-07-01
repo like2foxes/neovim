@@ -18,10 +18,12 @@ vim.pack.add({
 	"https://github.com/kristijanhusak/vim-dadbod-ui",
 	"https://github.com/kristijanhusak/vim-dadbod-completion",
 	"https://github.com/stevearc/conform.nvim",
+    "https://github.com/MeanderingProgrammer/render-markdown.nvim",
 	{ src = "https://github.com/saghen/blink.cmp", version = "v1.10.2" },
 }, { load = false })
 
 require("nvim-autopairs").setup()
+require("render-markdown").setup({})
 
 local lsps = { "lua_ls", "ts_ls", "angularls", "html", "cssls", "fsautocomplete", "marksman", "clangd", "gopls", "ruby_lsp", "herb_ls"  }
 for _, v in pairs(lsps) do
