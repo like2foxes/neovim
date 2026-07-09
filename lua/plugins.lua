@@ -25,7 +25,7 @@ vim.pack.add({
 require("nvim-autopairs").setup()
 require("render-markdown").setup({})
 
-local lsps = { "lua_ls", "ts_ls", "angularls", "html", "cssls", "fsautocomplete", "marksman", "clangd", "gopls", "ruby_lsp", "herb_ls"  }
+local lsps = { "lua_ls", "ts_ls", "angularls", "html", "cssls", "fsautocomplete", "marksman", "clangd", "gopls", "ruby_lsp", "herb_ls", "rust_analyzer"  }
 for _, v in pairs(lsps) do
 	vim.lsp.enable(v)
 end
